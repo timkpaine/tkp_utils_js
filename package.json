@@ -1,6 +1,6 @@
 {
   "name": "tkp_utils",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "Apache-2.0",
   "dependencies": {
     "@finos/perspective": "^0.4.0-rc.6",
@@ -39,11 +39,15 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf build",
+    "clean": "rimraf lib",
     "lint": "./node_modules/.bin/tslint 'src/ts/*.ts' 'src/ts/**/*.ts'",
     "fix": "./node_modules/.bin/tslint 'src/ts/*.ts' 'src/ts/**/*.ts' --fix",
     "test": "NODE_ENV=test jest -i --coverage --no-cache --collectCoverageFrom=str/**/*.{ts}"
   },
-  "typings": "build/index",
-  "main": "build/index"
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.css"
+  ],
+  "typings": "lib/index",
+  "main": "lib/index"
 }
