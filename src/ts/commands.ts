@@ -1,7 +1,5 @@
 import { CommandRegistry } from "@phosphor/commands";
 
-export const commands = new CommandRegistry();
-
 export
 interface ICommandDefinition {
     execute: () => any;
@@ -12,7 +10,7 @@ interface ICommandDefinition {
 }
 
 export
-function constructCommands(commandDefinitions: ICommandDefinition[]) {
+function constructCommands(commands: CommandRegistry, commandDefinitions: ICommandDefinition[]) {
     for (const commandDefinition of commandDefinitions) {
         commands.addCommand(commandDefinition.name, {
             execute: commandDefinition.execute,
