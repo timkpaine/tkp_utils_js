@@ -1,6 +1,6 @@
 {
   "name": "tkp_utils",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "Apache-2.0",
   "dependencies": {
     "@finos/perspective": "^0.4.0-rc.6",
@@ -46,7 +46,7 @@
   },
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
-    "src/style/*.{css,less}"
+    "src/style/*"
   ],
   "typings": "lib/index",
   "main": "lib/index"
