@@ -1,16 +1,16 @@
 import {Widget} from "@phosphor/widgets";
-import {basepath} from "./utils";
+import {basepath} from "./path";
 
 export
 class Header extends Widget {
-    public static createNode(): HTMLElement {
+    public static createNode(iconLink?: string): HTMLElement {
         const node = document.createElement("div");
         node.classList.add("header");
         const a = document.createElement("a");
         a.href = basepath();
 
         const img = document.createElement("img");
-        img.src = a.href + "static/img/cs_cyan.png";
+        img.src = a.href + iconLink;
         a.appendChild(img);
         node.appendChild(a);
 
@@ -22,8 +22,8 @@ class Header extends Widget {
         return node;
     }
 
-    constructor() {
-        super({ node: Header.createNode() });
+    constructor(iconLink?: string) {
+        super({ node: Header.createNode(iconLink) });
         this.setFlag(Widget.Flag.DisallowLayout);
         this.title.closable = false;
     }

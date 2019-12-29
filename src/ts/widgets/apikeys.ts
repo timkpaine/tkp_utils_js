@@ -1,21 +1,23 @@
 import {IRequestResult, request} from "requests-helper";
-import {APIKEYS} from "../define";
-import {basepath} from "../utils";
+import {basepath} from "../path";
 import {BaseWidget} from "./base";
 
 // tslint:disable no-namespace no-empty no-console
 
 export
 class APIKeysWidget extends BaseWidget {
-    constructor() {
+    private apikeyPath: string;
+
+    constructor(apikeyPath: string) {
         super({node: Private.createAPIKeysNode()});
         this.getForm().onsubmit = (e) => this.newKey(e);
         this.addClass("apikeys");
         this.title.label = "API Keys";
+        this.apikeyPath = apikeyPath;
     }
 
     public onAfterAttach() {
-        request("get", basepath() + APIKEYS).then((res: IRequestResult) => {
+        request("get", basepath() + this.apikeyPath).then((res: IRequestResult) => {
             if (res.ok) {
                 const table = this.getTable();
                 while (table.lastChild) {
@@ -26,7 +28,7 @@ class APIKeysWidget extends BaseWidget {
                 for (const k of Object.keys(data)) {
                     const dat = data[k];
                     Private.addAPIKeyTableRow(table, dat.apikey_id, dat.key, dat.secret, (id: string) => {
-                        request("post", basepath() + APIKEYS, {id}).then((res2: IRequestResult) => {
+                        request("post", basepath() + this.apikeyPath, {id}).then((res2: IRequestResult) => {
                             if (res2.ok) {
                                 this.onAfterAttach();
                             } else {
@@ -49,7 +51,7 @@ class APIKeysWidget extends BaseWidget {
 
     private newKey(e: Event): void {
         e.preventDefault();
-        request("post", basepath() + APIKEYS).then((res: IRequestResult) => {
+        request("post", basepath() + this.apikeyPath).then((res: IRequestResult) => {
             if (res.ok) {
                 this.onAfterAttach();
             } else {

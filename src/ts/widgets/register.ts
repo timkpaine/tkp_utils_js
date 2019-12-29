@@ -1,16 +1,18 @@
 import {IRequestResult, request} from "requests-helper";
-import {REGISTER} from "../define";
-import {basepath} from "../utils";
+import {basepath} from "../path";
 import {BaseWidget} from "./base";
 // tslint:disable no-namespace object-literal-sort-keys no-console
 
 export
 class RegisterWidget extends BaseWidget {
-    constructor() {
+    private registerPath: string;
+
+    constructor(registerPath: string) {
         super({node: Private.createRegisterNode()});
         this.getForm().onsubmit = (e) => this.register(e);
         this.addClass("register");
         this.title.label = "Register";
+        this.registerPath = registerPath;
     }
 
     private getFormData(): {[key: string]: string} {
@@ -21,7 +23,7 @@ class RegisterWidget extends BaseWidget {
 
     private register(e: Event): void {
         e.preventDefault();
-        request("post", basepath() + REGISTER, {}, this.getFormData()).then((res: IRequestResult) => {
+        request("post", basepath() + this.registerPath, {}, this.getFormData()).then((res: IRequestResult) => {
             if (res.ok) {
                 this.close();
             } else {

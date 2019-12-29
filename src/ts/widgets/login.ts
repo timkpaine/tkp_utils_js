@@ -1,17 +1,19 @@
 import {IRequestResult, request} from "requests-helper";
-import {LOGIN, LOGOUT} from "../define";
-import {basepath} from "../utils";
+import {basepath} from "../path";
 import {BaseWidget} from "./base";
 
 // tslint:disable max-classes-per-file no-namespace object-literal-sort-keys no-console
 
 export
 class LoginWidget extends BaseWidget {
-    constructor() {
+    private loginPath: string;
+
+    constructor(loginPath: string) {
         super({node: Private.createLoginNode()});
         this.getForm().onsubmit = (e) => this.login(e);
         this.addClass("login");
         this.title.label = "Login";
+        this.loginPath = loginPath;
     }
 
     private getFormData(): {[key: string]: string} {
@@ -21,7 +23,7 @@ class LoginWidget extends BaseWidget {
 
     private login(e: Event): void {
         e.preventDefault();
-        request("post", basepath() + LOGIN, {}, this.getFormData()).then((res: IRequestResult) => {
+        request("post", basepath() + this.loginPath, {}, this.getFormData()).then((res: IRequestResult) => {
             if (res.ok) {
                 const username = (res.json() as {[key: string]: string}).username;
                 (window as any).user = username;
@@ -35,16 +37,19 @@ class LoginWidget extends BaseWidget {
 
 export
 class LogoutWidget extends BaseWidget {
-    constructor() {
+    private logoutPath: string;
+
+    constructor(logoutPath: string) {
         super({node: Private.createLogoutNode()});
         this.getForm().onsubmit = (e) => this.logout(e);
         this.addClass("logout");
         this.title.label = "Logout";
+        this.logoutPath = logoutPath;
     }
 
     private logout(e: Event): void {
         e.preventDefault();
-        request("post", basepath() + LOGOUT).then((res: IRequestResult) => {
+        request("post", basepath() + this.logoutPath).then((res: IRequestResult) => {
             if (res.ok) {
                 (window as any).user = undefined;
                 this.close();
