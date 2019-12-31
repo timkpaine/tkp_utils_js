@@ -1,6 +1,6 @@
 {
   "name": "tkp_utils",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "Apache-2.0",
   "dependencies": {
     "@finos/perspective": "^0.4.0-rc.6",
