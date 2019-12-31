@@ -27,7 +27,7 @@ class APIKeysWidget extends BaseWidget {
                 let count = 0;
                 for (const k of Object.keys(data)) {
                     const dat = data[k];
-                    Private.addAPIKeyTableRow(table, dat.apikey_id.toString(), dat.key.toString(), dat.secret.toString(), (id: string) => {
+                    Private.addAPIKeyTableRow(table, dat.id.toString(), dat.key.toString(), dat.secret.toString(), (id: string) => {
                         request("post", basepath() + this.apikeyPath, {id}).then((res2: IRequestResult) => {
                             if (res2.ok) {
                                 this.onAfterAttach();
