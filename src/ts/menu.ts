@@ -6,6 +6,7 @@ export
 interface IMenuDefinition {
     name?: string;
     commands: string[];
+    class?: string;
 }
 
 export
@@ -19,13 +20,16 @@ function buildMenubar(commands: CommandRegistry, menuName: string, menuClass: st
     menu.title.mnemonic = 0;
 
     for (const menuDefinition of menus) {
-      if (menuDefinition.name) {
-        const submenu = new Menu({commands});
-        submenu.title.label = menuDefinition.name;
-        for (const command of menuDefinition.commands) {
-          submenu.addItem({command});
-        }
-        menu.addItem({type: "submenu", submenu});
+        if (menuDefinition.name) {
+            const submenu = new Menu({commands});
+            submenu.title.label = menuDefinition.name;
+            for (const command of menuDefinition.commands) {
+                submenu.addItem({command});
+            }
+            if (menuDefinition.class) {
+                submenu.addClass(menuDefinition.class);
+            }
+            menu.addItem({type: "submenu", submenu});
         } else {
             for (const command of menuDefinition.commands) {
                 menu.addItem({ command });
